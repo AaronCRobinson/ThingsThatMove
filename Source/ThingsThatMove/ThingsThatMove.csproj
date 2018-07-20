@@ -56,7 +56,6 @@
     <Compile Include="HandleMapClicks.cs" />
     <Compile Include="MapComponent.cs" />
     <Compile Include="MovableBed.cs" />
-    <Compile Include="MovableThingComponentsUtility.cs" />
     <Compile Include="MovableThingUtility.cs" />
     <Compile Include="ThingRenderer.cs" />
     <Compile Include="Thing_RotationTracker.cs" />

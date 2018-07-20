@@ -23,10 +23,10 @@ namespace ThingsThatMove
                 {
                     foreach(object obj in __instance.SelectedObjects)
                     {
-                        if (obj is MovableThing thing)
+                        if (obj is IMovableThing thing)
                         {
                             // TODO: finish
-                            thing.pather.StartPath(UI.MouseCell(), PathEndMode.OnCell);
+                            thing.Pather.StartPath(UI.MouseCell(), PathEndMode.OnCell);
                         }
                     }
                 }

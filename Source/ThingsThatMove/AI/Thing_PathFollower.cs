@@ -149,6 +149,7 @@ namespace ThingsThatMove.AI
                 Log.Error("FailedToFindCloseUnoccupiedCellRecently unimplemented for thing");
                 return;
             }
+            // TODO: this fires even when the pawn is sitting still, is that right?
             if (!this.moving || !this.WillCollideWithThingOnNextPathCell())
             {
                 this.lastMovedTick = Find.TickManager.TicksGame;

@@ -34,8 +34,9 @@ namespace ThingsThatMove
         public Thing_PathFollower pather;
         public Thing_RotationTracker rotationTracker;
 
-        public Thing_PathFollower Pather { get => pather; }
-        public Thing_RotationTracker RotationTracker { get => rotationTracker; }
+        // NOTE: consider lazy loading?
+        public Thing_PathFollower Pather { get => pather; set => pather = value; }
+        public Thing_RotationTracker RotationTracker { get => rotationTracker; set => rotationTracker = value; }
 
         public override Vector3 DrawPos
         {
@@ -55,47 +56,16 @@ namespace ThingsThatMove
         public int TicksPerMoveCardinal { get => this.TicksPerMove(false); }
         public int TicksPerMoveDiagonal { get => this.TicksPerMove(true); }
 
-        // TODO: naming/understanding
-        // TODO: carry tracker
-        private int TicksPerMove(bool diagonal)
-        {
-            float num = this.GetStatValue(StatDefOf.MoveSpeed, true);
-            // NOTE: can things be InRestraints? 
-
-            /*if (this.carryTracker != null && this.carryTracker.CarriedThing != null && this.carryTracker.CarriedThing.def.category == ThingCategory.Pawn)
-                num *= 0.6f;*/
-
-            float num2 = num / 60f;
-            float num3;
-            if (num2 == 0f)
-                num3 = 450f;
-            else
-            {
-                num3 = 1f / num2;
-                if (base.Spawned && !base.Map.roofGrid.Roofed(base.Position))
-                    num3 /= base.Map.weatherManager.CurMoveSpeedMultiplier;
-                if (diagonal)
-                    num3 *= 1.41421f;
-            }
-            int value = Mathf.RoundToInt(num3);
-            return Mathf.Clamp(value, 1, 450);
-        }
-
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-            MovableThingComponentsUtility.AddComponentsForSpawn(this);
-            this.Drawer.Notify_Spawned();
-            this.rotationTracker.Notify_Spawned();
-            this.pather.ResetToCurrentPosition();
+            this.MovableThing_SpawnSetup();
         }
 
         public override void DeSpawn()
         {
             base.DeSpawn();
-            if (this.pather != null)
-                this.pather.StopDead();
-            MovableThingComponentsUtility.RemoveComponentsOnDespawned(this);
+            this.MovableThing_DeSpawn();
         }
 
         public override void Tick()
@@ -103,21 +73,6 @@ namespace ThingsThatMove
             base.Tick();
             this.MovableThing_Tick();
         }
-
-        /*public override void Tick()
-        {
-            base.Tick();
-            if (!ThingOwnerUtility.ContentsFrozen(base.ParentHolder))
-            {
-                if (base.Spawned)
-                    this.pather.PatherTick();
-                if (base.Spawned)
-                {
-                    this.Drawer.DrawTrackerTick();
-                    this.rotationTracker.RotationTrackerTick();
-                }
-            }
-        }*/
 
         public override void DrawAt(Vector3 drawLoc, bool flip = false) => this.Drawer.DrawAt(drawLoc);
 

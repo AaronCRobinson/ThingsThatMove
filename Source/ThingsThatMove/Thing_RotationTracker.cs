@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Verse;
+﻿using Verse;
 
 namespace ThingsThatMove
 {
@@ -44,9 +40,6 @@ namespace ThingsThatMove
                 this.thing.Rotation = Rot4.South;
         }
 
-        public void ExposeData()
-        {
-            throw new NotImplementedException();
-        }
+        public void ExposeData() { } // TODO?
     }
 }
